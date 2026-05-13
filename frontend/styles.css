@@ -1,0 +1,615 @@
+/* Constellar — design tokens, layout, list view, constellation view, mobile.
+   Goal: dark, editorial, calm. NOT another generic feed reader. */
+
+:root {
+  /* +/- buttons in the header bind to this. Default = 1.3 (≈ +4pt). */
+  --text-scale: 1.30;
+
+  --bg:           #0a0a10;
+  --bg-card:      #11111a;
+  --bg-card-2:    #161622;
+  --bg-elev:      #1a1a26;
+  --line:         #1f1f2e;
+  --line-soft:    #15151f;
+  --text:         #ece8e0;        /* warmer than #e6e6f0 — feels editorial */
+  --muted:        #9b9b9b;        /* WCAG AA on bg */
+  --dim:          #6e6e80;        /* AA on bg-card */
+  --accent:       #c9a3ff;        /* purple — AI voice */
+  --accent-2:     #ff6b8a;        /* coral — Reddit / tags */
+  --warm:         #f5d3a8;        /* cream — featured headlines */
+  --reject:       #4a2030;
+  --click:        #1f3a2e;
+  --shadow:       0 12px 40px rgba(0, 0, 0, 0.5);
+  --radius:       10px;
+  --mono:         ui-monospace, "SF Mono", "JetBrains Mono", Consolas, monospace;
+  --serif:        "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --serif-display:"Iowan Old Style", "Times New Roman", Georgia, serif;
+  --sans:         -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---- focus ---- */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---- header ---- */
+.bar {
+  position: sticky; top: 0; z-index: 10;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  background: rgba(10, 10, 16, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  min-height: 56px;
+}
+
+.brand {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--accent);
+}
+.brand .name {
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.views {
+  display: inline-flex;
+  gap: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px;
+  justify-self: center;
+}
+.view {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: none;
+  color: var(--muted); padding: 6px 12px; border-radius: 6px;
+  font-family: var(--mono); font-size: 11.5px; text-transform: lowercase;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.view:hover { color: var(--text); }
+.view.active {
+  color: var(--text);
+  background: var(--bg-elev);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.view svg { color: currentColor; }
+.view:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.actions { display: flex; align-items: center; gap: 12px; }
+.stats {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
+  cursor: help;
+  white-space: nowrap;
+}
+
+/* ---- undo button (header) ---- */
+.undo-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--bg-card);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: var(--mono); font-size: 11.5px; text-transform: lowercase;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s, opacity 0.12s;
+}
+.undo-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg-card));
+  color: var(--text);
+  border-color: var(--accent);
+}
+.undo-btn:disabled {
+  color: var(--dim);
+  border-color: var(--line);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.undo-btn .undo-glyph { font-size: 14px; line-height: 1; }
+
+/* ---- font-size controls ---- */
+.font-controls {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-card);
+  overflow: hidden;
+}
+.font-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding: 6px 12px;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.font-btn:hover { background: var(--bg-elev); color: var(--text); }
+.font-btn + .font-btn { border-left: 1px solid var(--line); }
+
+/* ---- buttons ---- */
+button.primary {
+  position: relative;
+  background: var(--accent);
+  color: #18001a;
+  border: none; padding: 8px 16px; border-radius: 6px;
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  cursor: pointer; text-transform: lowercase;
+  transition: filter 0.15s;
+  overflow: hidden;
+  min-width: 84px;
+}
+button.primary:hover:not(:disabled) { filter: brightness(1.1); }
+button.primary:disabled { opacity: 0.7; cursor: wait; }
+.refresh-bar {
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 2px;
+  width: 0%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: width 0.3s ease-out;
+  pointer-events: none;
+}
+
+button.ghost {
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 8px 14px; border-radius: 6px;
+  font-family: var(--mono); font-size: 12px; cursor: pointer;
+  text-transform: lowercase;
+}
+button.ghost:hover { color: var(--text); border-color: var(--muted); }
+button.ghost:disabled { opacity: 0.5; cursor: wait; }
+
+/* ---- view switcher ---- */
+.view-pane { display: block; }
+.view-pane[hidden] { display: none; }
+
+/* ===========================================================
+   LIST VIEW — editorial
+   =========================================================== */
+
+.feed {
+  max-width: 920px; margin: 0 auto;
+  padding: 32px 24px 80px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+.empty {
+  padding: 100px 24px; text-align: center;
+  color: var(--muted); font-family: var(--serif); font-size: calc(19px * var(--text-scale)); font-style: italic;
+}
+
+/* Standard card */
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 16px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  transition: background 0.15s, border-color 0.15s, transform 0.2s, opacity 0.3s;
+  cursor: pointer;
+}
+.card:hover { background: var(--bg-card-2); border-color: var(--line); }
+.card:focus-visible { outline-offset: 0; border-color: var(--accent); }
+.card.removing { opacity: 0; transform: translateX(-12px); pointer-events: none; }
+
+.card .top { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* Tags use --tag-color set per source */
+.tag {
+  font-family: var(--mono); font-size: calc(10px * var(--text-scale)); text-transform: lowercase;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 2px 8px; border-radius: 4px;
+  background: var(--bg);
+  white-space: nowrap;
+}
+.tag.source {
+  color: var(--tag-color, var(--accent));
+  border-color: color-mix(in srgb, var(--tag-color, var(--accent)) 30%, transparent);
+}
+
+.card-title {
+  margin: 2px 0;
+  font-family: var(--serif); font-weight: 500; font-size: calc(17px * var(--text-scale));
+  line-height: 1.32; color: var(--text);
+}
+.card-title a:hover { color: var(--accent); }
+
+/* Featured cards: bigger headline, more breathing room, pull-quote treatment */
+.card-featured {
+  padding: 24px 24px 22px;
+  background: linear-gradient(180deg, var(--bg-card-2) 0%, var(--bg-card) 100%);
+  border-color: var(--line);
+}
+.card-featured .card-title {
+  font-family: var(--serif-display);
+  font-weight: 500;
+  font-size: calc(26px * var(--text-scale));
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--warm);
+}
+
+.snippet {
+  margin: 0;
+  color: var(--muted); font-size: calc(13.5px * var(--text-scale)); line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ai-comment {
+  margin: 4px 0 2px;
+  padding-left: 12px;
+  border-left: 2px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--serif); font-style: italic; font-size: calc(14.5px * var(--text-scale));
+  line-height: 1.45;
+}
+
+/* Featured AI comment as a real pull-quote */
+.ai-quote {
+  margin: 8px 0 4px;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: calc(18px * var(--text-scale));
+  line-height: 1.4;
+  color: var(--accent);
+  text-indent: -0.4em;
+}
+
+.meta {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: calc(11px * var(--text-scale)); color: var(--dim);
+  margin-top: 4px;
+}
+.meta .when { color: var(--dim); }
+.meta .author { color: var(--dim); }
+.meta .score { color: var(--accent); }
+.meta .spacer { flex: 1; }
+
+.icon-btn {
+  background: transparent; border: 1px solid var(--line);
+  color: var(--muted); padding: 4px 10px; border-radius: 4px;
+  font-family: var(--mono); font-size: calc(12px * var(--text-scale)); line-height: 1; cursor: pointer;
+  transition: all 0.15s;
+  min-width: 32px;
+}
+.icon-btn:hover { color: var(--text); border-color: var(--muted); }
+.icon-btn.dismiss:hover {
+  color: var(--text);
+  border-color: var(--muted);
+  background: rgba(255, 255, 255, 0.05);
+}
+.icon-btn.reject {
+  font-size: calc(14px * var(--text-scale));   /* ⊘ glyph reads small at default size */
+}
+.icon-btn.reject:hover {
+  color: var(--accent-2);
+  border-color: var(--accent-2);
+  background: var(--reject);
+}
+
+/* Source dividers (could be added later by app.js if you want grouping) */
+.divider {
+  display: flex; align-items: baseline; gap: 12px;
+  margin: 24px 4px 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.divider-label {
+  font-family: var(--mono); font-size: calc(12px * var(--text-scale)); text-transform: lowercase;
+  color: var(--tag-color, var(--text));
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.divider-count {
+  font-family: var(--mono); font-size: calc(10px * var(--text-scale)); color: var(--dim);
+}
+
+/* ===========================================================
+   CONSTELLATION VIEW
+   =========================================================== */
+
+.constellation {
+  position: fixed;
+  top: 56px; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  background: #06060c;
+  touch-action: none;  /* let our touch handlers own it */
+}
+#constellation-canvas {
+  display: block; width: 100%; height: 100%;
+  cursor: grab;
+}
+#constellation-canvas:active { cursor: grabbing; }
+
+.cpanel {
+  position: fixed;
+  width: 320px;
+  max-width: calc(100vw - 16px);
+  background: rgba(17, 17, 26, 0.96);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+  z-index: 20;
+  pointer-events: none;
+}
+.panel-source {
+  font-family: var(--mono); font-size: calc(10px * var(--text-scale)); text-transform: lowercase;
+  color: var(--accent-2); margin-bottom: 6px;
+}
+.panel-title {
+  font-family: var(--serif); font-size: calc(15px * var(--text-scale)); line-height: 1.32;
+  color: var(--text); margin-bottom: 8px;
+}
+.panel-comment {
+  font-family: var(--serif); font-style: italic; font-size: calc(13px * var(--text-scale));
+  color: var(--accent); margin-bottom: 8px; line-height: 1.45;
+}
+.panel-snippet {
+  font-size: calc(12px * var(--text-scale)); color: var(--muted); margin-bottom: 8px; line-height: 1.45;
+}
+.panel-tags {
+  font-family: var(--mono); font-size: calc(10px * var(--text-scale)); color: var(--muted);
+  margin-bottom: 8px;
+}
+.panel-hint {
+  font-family: var(--mono); font-size: calc(9px * var(--text-scale)); color: var(--dim);
+  border-top: 1px solid var(--line); padding-top: 6px;
+}
+
+.cstatus {
+  position: absolute; bottom: 16px; right: 16px;
+  font-family: var(--mono); font-size: calc(11px * var(--text-scale)); color: var(--dim);
+  background: rgba(10, 10, 16, 0.7);
+  padding: 6px 10px; border-radius: 4px;
+  pointer-events: none;
+}
+
+/* ---- spotlight (middle-click feature) ---- */
+.spotlight-layer {
+  position: absolute; inset: 0;
+  pointer-events: none;     /* leader lines on canvas; only the panels are interactive */
+  z-index: 25;
+}
+.spotlight-layer .cpanel.spotlight {
+  position: absolute;
+  width: 280px;
+  pointer-events: auto;     /* override the .cpanel default */
+  cursor: pointer;
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  box-shadow: 0 0 0 1px rgba(201, 163, 255, 0.15), var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+  animation: spotlightIn 0.25s ease-out;
+}
+.spotlight-layer .cpanel.spotlight:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(201, 163, 255, 0.4), var(--shadow);
+}
+.spotlight-actions {
+  position: absolute;
+  top: 6px; right: 6px;
+  display: flex; gap: 4px;
+  pointer-events: auto;
+}
+.spotlight-btn {
+  width: 22px; height: 22px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted); border-radius: 4px;
+  font-family: var(--mono); font-size: calc(14px * var(--text-scale)); line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+}
+.spotlight-dismiss:hover {
+  color: var(--text);
+  border-color: var(--muted);
+  background: rgba(255, 255, 255, 0.06);
+}
+.spotlight-reject:hover {
+  color: var(--accent-2);
+  border-color: var(--accent-2);
+  background: var(--reject);
+}
+/* legacy single-X close button kept for any callers still using it */
+.spotlight-close {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 22px; height: 22px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: auto;
+}
+.spotlight-close:hover { color: var(--accent-2); border-color: var(--accent-2); }
+@keyframes spotlightIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---- onboarding overlay ---- */
+.coverlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(6, 6, 12, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 30;
+  padding: 24px;
+}
+/* The class's `display: flex` outranks the browser default for [hidden],
+   so we need an explicit override or the overlay never disappears. */
+.coverlay[hidden] { display: none; }
+.coverlay-inner {
+  max-width: 420px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 28px 22px;
+  text-align: left;
+  box-shadow: var(--shadow);
+}
+.coverlay-inner h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif-display);
+  font-size: calc(24px * var(--text-scale)); font-weight: 500;
+  color: var(--warm);
+}
+.coverlay-inner p {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: calc(14px * var(--text-scale));
+  line-height: 1.5;
+}
+.coverlay-inner ul {
+  list-style: none;
+  padding: 0; margin: 0 0 20px;
+  font-family: var(--mono);
+  font-size: calc(12px * var(--text-scale));
+  color: var(--text);
+}
+.coverlay-inner li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.coverlay-inner li:last-child { border-bottom: none; }
+.coverlay-inner strong { color: var(--accent); font-weight: 600; }
+
+/* ===========================================================
+   TOAST
+   =========================================================== */
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--bg-card-2); color: var(--text);
+  padding: 10px 18px; border-radius: 8px;
+  border: 1px solid var(--line); box-shadow: var(--shadow);
+  font-family: var(--mono); font-size: 12px;
+  animation: rise 0.25s ease-out;
+  max-width: calc(100vw - 32px);
+  z-index: 100;
+}
+.toast.error {
+  border-color: var(--accent-2);
+  color: var(--accent-2);
+}
+@keyframes rise {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ===========================================================
+   SCROLLBAR
+   =========================================================== */
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--dim); }
+
+/* ===========================================================
+   MOBILE
+   - Below 720px: collapse header label, hide stats detail.
+   - Below 520px: hide constellation toggle entirely (touch UX is OK
+     but small phones make the map hard to use; list is the right view).
+   =========================================================== */
+
+@media (max-width: 720px) {
+  .bar {
+    grid-template-columns: auto 1fr auto;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+  .brand .name { display: none; }
+  .stats { display: none; }
+  .feed { padding: 20px 14px 60px; }
+  .card { padding: 14px 14px; }
+  .card-featured { padding: 18px 16px; }
+  .card-featured .card-title { font-size: calc(22px * var(--text-scale)); }
+  .ai-quote { font-size: calc(16px * var(--text-scale)); }
+  .view span { display: none; }   /* icons-only on mobile */
+  .view { padding: 6px 10px; }
+  .font-btn { padding: 5px 8px; font-size: 13px; }
+}
+
+@media (max-width: 520px) {
+  .view[data-view="constellation"] { display: none; }
+  .coverlay-inner { padding: 22px 20px 18px; }
+  .coverlay-inner h3 { font-size: 20px; }
+}
+
+/* Pointer-coarse (touch) UI tweaks */
+@media (pointer: coarse) {
+  .icon-btn { min-width: 40px; padding: 6px 12px; font-size: 14px; }
+  .card { padding: 18px; }
+}
+
+/* ---- singularity easter egg ---- */
+/* JS sets transform (scale) + opacity each frame; this rule provides the
+   layout, typography, and glow. Positioned dead-center over the canvas. */
+.singularity-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  font-family: "Iowan Old Style", Georgia, serif;
+  font-weight: 900;
+  font-style: italic;
+  /* Sized to fit "THE SINGULARITY!!!" on typical windows; JS additionally
+     measures + shrinks at runtime so it never overflows. */
+  font-size: clamp(36px, 8.5vw, 150px);
+  letter-spacing: 0.04em;
+  color: #fafaff;
+  text-shadow:
+    0 0 24px rgba(201, 163, 255, 0.85),
+    0 0 64px rgba(140, 110, 255, 0.55),
+    0 0 120px rgba(80, 60, 200, 0.35);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 50;
+  will-change: transform, opacity;
+}

@@ -1,0 +1,108 @@
+{
+  "rss": [
+    { "name": "apnews",      "url": "https://news.google.com/rss/search?q=site%3Aapnews.com&hl=en-US&gl=US&ceid=US:en",
+      "tags": ["apnews", "news", "breaking-news", "politics", "world", "us-news", "journalism", "wire-service"] },
+
+    { "name": "kotaku",      "url": "https://kotaku.com/rss",
+      "tags": ["kotaku", "gaming", "video-games", "gamer-culture", "tech", "pop-culture"] },
+
+    { "name": "gizmodo",     "url": "https://gizmodo.com/rss",
+      "tags": ["gizmodo", "tech", "gadgets", "science", "consumer-electronics", "review"] },
+
+    { "name": "the-face",    "url": "https://theface.com/feeds/rss.xml",
+      "tags": ["the-face", "culture", "fashion", "music", "youth-culture", "magazine"] },
+
+    { "name": "laist",       "url": "https://laist.com/index.rss",
+      "tags": ["laist", "local", "la", "los-angeles", "california", "news", "public-radio"] },
+
+    { "name": "theverge",    "url": "https://www.theverge.com/rss/index.xml",
+      "tags": ["theverge", "tech", "gadgets", "science", "ai", "transportation", "policy", "review"] },
+
+    { "name": "wired",       "url": "https://www.wired.com/feed/rss",
+      "tags": ["wired", "tech", "science", "business", "culture", "security", "longform", "magazine"] },
+
+    { "name": "hackernews",  "url": "https://news.ycombinator.com/rss",
+      "tags": ["hackernews", "tech", "programming", "startups", "computer-science", "ai", "engineering", "discussion"] },
+
+    { "name": "fastcompany", "url": "https://www.fastcompany.com/latest/rss",
+      "tags": ["fastcompany", "business", "design", "tech", "innovation", "leadership", "workplace"] },
+
+    { "name": "vox",         "url": "https://www.vox.com/rss/index.xml",
+      "tags": ["vox", "news", "politics", "explainers", "policy", "culture", "analysis"] },
+
+    { "name": "aeon",        "url": "https://aeon.co/feed.rss",
+      "tags": ["aeon", "philosophy", "longform", "science", "ideas", "essays", "culture", "humanities"] },
+
+    { "name": "i-d",         "url": "https://i-d.co/feed/",
+      "tags": ["i-d", "fashion", "music", "culture", "art", "youth-culture", "queer-culture", "magazine"] },
+
+    { "name": "dazed",       "url": "https://www.dazeddigital.com/rss",
+      "tags": ["dazed", "fashion", "music", "art", "culture", "youth-culture", "magazine"] },
+
+    { "name": "colossal",    "url": "https://www.thisiscolossal.com/feed/",
+      "tags": ["colossal", "art", "design", "photography", "sculpture", "visual-art", "craft"] }
+  ],
+  "reddit": {
+    "credentials": {
+      "client_id": "",
+      "client_secret": "",
+      "username": "",
+      "password": "",
+      "user_agent": "constellar/0.1 (personal feed reader)"
+    },
+    "frontpage": {
+      "enabled": false,
+      "sort": "hot",
+      "limit": 100
+    },
+    "subreddits": [
+      { "name": "popular",             "sort": "hot", "limit": 50,
+        "tags": ["popular", "trending", "general", "front-page", "memes", "discussion"] },
+
+      { "name": "wallstreetbets",      "sort": "hot", "limit": 25,
+        "tags": ["finance", "stocks", "trading", "memes", "drama", "humour", "options"] },
+
+      { "name": "worldnews",           "sort": "hot", "limit": 25,
+        "tags": ["news", "world", "geopolitics", "international", "current-events"] },
+
+      { "name": "technology",          "sort": "hot", "limit": 25,
+        "tags": ["tech", "technology", "news", "ai", "policy", "industry"] },
+
+      { "name": "InterviewVampire",    "sort": "hot", "limit": 25,
+        "tags": ["tv", "vampires", "anne-rice", "interview-with-the-vampire", "gothic", "fandom", "amc", "drama"] },
+
+      { "name": "TheSequels",          "sort": "hot", "limit": 25,
+        "tags": ["tv", "vampires", "anne-rice", "the-vampire-chronicles", "fandom", "gothic", "amc"] },
+
+      { "name": "vampires",            "sort": "hot", "limit": 25,
+        "tags": ["vampires", "gothic", "horror", "supernatural", "fiction", "lore", "subculture"] },
+
+      { "name": "indieheads",          "sort": "hot", "limit": 25,
+        "tags": ["music", "indie", "indie-rock", "alternative", "discussion", "albums", "criticism"] },
+
+      { "name": "news",                "sort": "hot", "limit": 25,
+        "tags": ["news", "current-events", "breaking-news", "us-news"] },
+
+      { "name": "BlackPeopleofReddit", "sort": "hot", "limit": 25,
+        "tags": ["community", "black-culture", "discussion", "social", "identity"] },
+
+      { "name": "gaming",              "sort": "hot", "limit": 25,
+        "tags": ["gaming", "video-games", "gamer-culture", "memes", "discussion"] },
+
+      { "name": "UnderReportedNews",   "sort": "hot", "limit": 25,
+        "tags": ["news", "underreported", "alternative-news", "investigative", "world"] },
+
+      { "name": "lotr",                "sort": "hot", "limit": 25,
+        "tags": ["lotr", "lord-of-the-rings", "fantasy", "tolkien", "books", "films", "fandom", "rings-of-power"] },
+
+      { "name": "claudeai",            "sort": "hot", "limit": 25,
+        "tags": ["ai", "claude", "anthropic", "llm", "tech", "tools", "discussion"] },
+
+      { "name": "VibeCoding",          "sort": "hot", "limit": 25,
+        "tags": ["ai", "coding", "programming", "vibe-coding", "llm", "developer-tools", "engineering"] },
+
+      { "name": "Fauxmoi",             "sort": "hot", "limit": 25,
+        "tags": ["celebrity", "gossip", "pop-culture", "drama", "entertainment", "tabloid", "discussion"] }
+    ]
+  }
+}

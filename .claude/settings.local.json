@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python *)",
+      "Bash(node --check \"C:\\\\Users\\\\young\\\\documents\\\\github\\\\constellar\\\\frontend\\\\app.js\")",
+      "Bash(node --check \"C:\\\\Users\\\\young\\\\documents\\\\github\\\\constellar\\\\frontend\\\\constellation.js\")",
+      "Bash(pip install *)",
+      "Bash(grep -E \"\\\\.\\(md|pptx\\)$\")"
+    ]
+  }
+}

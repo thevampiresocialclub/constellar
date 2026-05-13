@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a10" />
+  <title>Constellar</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="bar">
+    <a class="brand" href="/" title="constellar — your AI-curated feed">
+      <svg class="logo" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <circle cx="12" cy="12" r="2.2" fill="currentColor" />
+        <circle cx="5"  cy="6"  r="1.2" fill="currentColor" opacity="0.7"/>
+        <circle cx="19" cy="7"  r="1"   fill="currentColor" opacity="0.6"/>
+        <circle cx="6"  cy="18" r="1"   fill="currentColor" opacity="0.6"/>
+        <circle cx="18" cy="17" r="1.2" fill="currentColor" opacity="0.7"/>
+        <line x1="5" y1="6"  x2="12" y2="12" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+        <line x1="19" y1="7" x2="12" y2="12" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+        <line x1="6" y1="18" x2="12" y2="12" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+        <line x1="18" y1="17" x2="12" y2="12" stroke="currentColor" stroke-width="0.4" opacity="0.4"/>
+      </svg>
+      <span class="name">constellar</span>
+    </a>
+
+    <nav class="views" role="tablist" aria-label="View">
+      <button class="view active" data-view="list" role="tab" aria-selected="true" title="List view">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+          <rect x="2" y="3" width="12" height="2" fill="currentColor"/>
+          <rect x="2" y="7" width="12" height="2" fill="currentColor"/>
+          <rect x="2" y="11" width="12" height="2" fill="currentColor"/>
+        </svg>
+        <span>list</span>
+      </button>
+      <button class="view" data-view="constellation" role="tab" aria-selected="false" title="Constellation view">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+          <circle cx="3" cy="4" r="1.2" fill="currentColor"/>
+          <circle cx="13" cy="3" r="1" fill="currentColor"/>
+          <circle cx="8" cy="8" r="1.6" fill="currentColor"/>
+          <circle cx="4" cy="13" r="1" fill="currentColor"/>
+          <circle cx="13" cy="12" r="1.4" fill="currentColor"/>
+        </svg>
+        <span>constellation</span>
+      </button>
+    </nav>
+
+    <div class="actions">
+      <span id="stats" class="stats" title="">—</span>
+      <button id="undo-dismiss" class="undo-btn" disabled title="Undo last dismissal (becomes available after you dismiss something)" aria-label="Undo last dismissal">
+        <span class="undo-glyph" aria-hidden="true">↶</span><span class="undo-label">undo</span>
+      </button>
+      <div class="font-controls" role="group" aria-label="Text size">
+        <button id="font-down" class="font-btn" aria-label="Smaller text" title="Smaller text">−</button>
+        <button id="font-up"   class="font-btn" aria-label="Larger text"  title="Larger text">+</button>
+      </div>
+      <button id="refresh" class="primary" aria-label="Refresh feed">
+        <span id="refresh-label">refresh</span>
+        <span id="refresh-bar" class="refresh-bar" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="list-view" class="feed view-pane"></main>
+
+  <main id="constellation-view" class="constellation view-pane" hidden>
+    <canvas id="constellation-canvas"></canvas>
+    <div id="constellation-panel" class="cpanel" hidden></div>
+
+    <div id="constellation-overlay" class="coverlay" hidden>
+      <div class="coverlay-inner">
+        <h3>welcome to the map</h3>
+        <p>each star is an item; nearby stars are about similar things.</p>
+        <ul>
+          <li><strong>drag</strong> to pan · <strong>scroll</strong> or <strong>pinch</strong> to zoom</li>
+          <li><strong>hover</strong> a star for the take · <strong>click</strong> to open</li>
+          <li><strong>right-click</strong> to dismiss (white dwarf, no ML signal)</li>
+          <li><strong>shift+right-click</strong> to reject (heavy negative for the model)</li>
+          <li><strong>middle-click</strong> for a spotlight of nearby stars</li>
+          <li>just dismissed by mistake? hit <strong>undo</strong> in the header</li>
+        </ul>
+        <button id="constellation-overlay-close" class="primary">got it</button>
+      </div>
+    </div>
+
+    <div class="cstatus" id="constellation-status">loading…</div>
+  </main>
+
+  <div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
+
+  <script src="/static/constellation.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

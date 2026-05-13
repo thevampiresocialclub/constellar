@@ -1,0 +1,40 @@
+# --- python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- secrets (defense in depth; the real config lives at ~/.constellar/config.env) ---
+.env
+.env.*
+!.env.example
+config.env
+config.env.local
+secrets.json
+**/secrets/
+
+# --- generated data + models (regenerated on first run) ---
+data/feed.db
+data/feed.db-journal
+data/feed.db-wal
+data/feed.db-shm
+data/clicks.jsonl
+data/rejects.jsonl
+data/preferences.md
+data/umap_model.pkl
+data/umap_model.joblib
+data/classifier.pkl
+data/classifier.joblib
+data/test_*.db
+
+# --- editor / OS junk ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# --- distribution / build artifacts (in case PyInstaller is ever used) ---
+build/
+dist/
+*.spec

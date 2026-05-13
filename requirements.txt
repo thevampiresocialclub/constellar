@@ -1,0 +1,28 @@
+# --- core: fetch, store, serve ---
+fastapi>=0.110
+uvicorn[standard]>=0.27
+feedparser>=6.0
+httpx>=0.27
+praw>=7.7
+python-dateutil>=2.8
+
+# --- ML: embeddings, projection, classifier ---
+numpy>=1.26
+scipy>=1.11
+scikit-learn>=1.4       # HDBSCAN + LogisticRegression + GBM
+umap-learn>=0.5
+fastembed>=0.4          # ONNX-based embeddings, no PyTorch needed
+
+# --- AI curator ---
+anthropic>=0.40
+
+# --- desktop app ---
+# pystray gives you a system-tray icon when you launch with --tray.
+# Pillow comes along as a fastembed dep; pystray uses it for the icon image.
+pystray>=0.19
+
+# --- optional: native window ---
+# On Python 3.14 the Windows backend (pythonnet) may not have wheels yet.
+# Install separately if you want a native window:
+#   pip install pywebview
+# Without it, app.py falls back to browser mode.
