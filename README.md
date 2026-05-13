@@ -22,6 +22,8 @@ Auto-refresh fires on launch when your data is more than 30 minutes stale. The f
 
 Full setup walkthrough — including how to wire up the Anthropic key and Reddit credentials — in **[INSTRUCTIONS.md](./INSTRUCTIONS.md)**.
 
+Brand new to Python and want true step-by-step hand-holding (installing Python, opening PowerShell, every click)? See **[ELI5_INSTRUCTIONS.md](./ELI5_INSTRUCTIONS.md)**.
+
 ---
 
 ## What's inside
